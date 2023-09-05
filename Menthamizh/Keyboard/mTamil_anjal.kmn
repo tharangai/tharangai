@@ -1,0 +1,102 @@
+﻿c store(&VERSION) '1.0'
+store(&NAME) 'mTamil_anjal'
+store(&COPYRIGHT) '© 2019 Edison Williams'
+store(&WINDOWSLANGUAGES) 'x0449'
+store(&LANGUAGE) 'x0449'
+store(&BITMAP) 'mTamil.ico'
+store(&VISUALKEYBOARD) 'mTamil_anjal.kvk'
+store(&ETHNOLOGUECODE) 'tam'
+store(&MESSAGE) 'menthamiz project keyman'
+store(&TARGETS) 'any windows macosx linux web iphone ipad androidphone androidtablet mobile desktop tablet'
+store(&WINDOWSLANGUAGES) 'x0449'
+begin Unicode > use(main)
+
+
+group(main) using keys 
+store(Vowels)        'a'     'A'    'i'    'I'    'u'    'U'    'e'    'E'    'o'    'O'
+store(tamilVowels)  U+E3E1 U+E3E2 U+E3E3 U+E3E4 U+E3E5 U+E3E6 U+E3E7 U+E3E8 U+E3EA U+E3EB
++ any(Vowels) > index(tamilVowels,1)    c Outputs vowels
+U+E3E1 + [K_A] > U+E3E2                 c Converts short vowels to Long vowels
+U+E3E3 + [K_I] > U+E3E4
+U+E3E5 + [K_U] > U+E3E6
+U+E3E7 + [K_E] > U+E3E8
+U+E3EA + [K_O] > U+E3EB
+U+E3E1 + [K_I] > context(1) U+E3E3       c Diphtongs - not needed but added to prevent interfering in eKalappai
+U+E3E1 + [K_U] > context(1) U+E3E5
+
+U+E3E2 + [K_A] > context(1) U+E3E0      c Generic Vowel extender
+U+E3E2 + [SHIFT K_A] > context(1) U+E3E0 U+E3E0
+U+E3E4 + [K_I] > context(1) U+E3E0
+U+E3E4 + [SHIFT K_I] > context(1) U+E3E0 U+E3E0
+U+E3E6 + [K_U] > context(1) U+E3E0
+U+E3E6 + [SHIFT K_U] > context(1) U+E3E0 U+E3E0
+U+E3E8 + [K_E] > context(1) U+E3E0
+U+E3E8 + [SHIFT K_E] > context(1) U+E3E0 U+E3E0
+U+E3EB + [K_O] > context(1) U+E3E0
+U+E3EB + [SHIFT K_O] > context(1) U+E3E0 U+E3E0
+U+E3E0 + '.' > context(1) U+E3E0
++ [SHIFT K_Y] > U+E3E0
+
+store(plosives)          'k'     'c'      't'      'T'      'p'      'R'    c   k ch t th p rr
+
+store(tamilPlosives)       U+E3EE  U+E3F0   U+E3F2   U+E3F4   U+E3F6   U+E3FE
+
++ any(plosives) > index(tamilPlosives,1)    c Displays plosives
+
+c store(nasalAndMediumPlosives)    'ng'     'nj'      'Nd'      'wD'      'mb'      'nR'    c   g j d dh b z
+U+E3FF + [K_G] > U+E3EF U+E3EC U+E3EE        c Displays ng
+U+E3FF + [K_J] > U+E3F1 U+E3EC U+E3F0        c Displays nj
+U+E3FF + [K_D] > U+E3F3 U+E3EC U+E3F2        c Displays Nd
+U+E3FF + [K_T] > U+E3F3 U+E3EC U+E3F2        c Displays Nd
+U+E3FF + [SHIFT K_T] > U+E3F5 U+E3EC U+E3F4        c Displays n-T
+U+E3F3 U+E3EC U+E3F2 + [K_H] > U+E3F5 U+E3EC U+E3F4        c Displays ndh, nth
+
+c store(mediumPlosives)    'g'     'j'      'd'      'D'      'b'      'Z'    =   g j d dh b z
++ [K_G] > U+E3EC U+E3EE     	   	   	   	c Display medium plosives. Displays g
++ [K_J] > U+E3EC U+E3F0     	   	   	   	c Displays j
++ [K_D] > U+E3EC U+E3F2     	   	   	   	c Displays d
++ [SHIFT K_D] > U+E3EC U+E3F4   	   	   	c Displays dh
++ [K_B] > U+E3EC U+E3F6     	   	   	   	c Displays b
++ [SHIFT K_Z] > U+E3EC U+E3FE     	   	   	c Displays z
+
+c store(softPlosives)      'h'     'zh/J'      'sh/x'      'ts/C'      'f'      'S'    =   h zh sh ths f s
++ [K_H] > U+E3ED U+E3EE     	   	   	   	c Display soft plosives. Displays h
++ [SHIFT K_J] > U+E3ED U+E3F0     	   	   	c Displays zh
++ [K_X] > U+E3ED U+E3EC U+E3F2     	   	   	c Displays SH(ch)
++ [SHIFT K_C] > U+E3ED U+E3F4   	   	   	c Displays ts
++ [K_F] > U+E3ED U+E3F6     	   	   	   	c Displays b
++ [SHIFT K_S] > U+E3ED U+E3EC U+E3F0   	   	c Displays s
+
+c store (altPlosives)       'K'     's'     'P'      'B'       'Q'
++ [SHIFT K_K] > U+E3ED U+E3EC U+E3EE       	c Displays K (Glottal stop)
++ [K_S] > U+E3ED U+E3EC U+E3F0     	   	   	c Display alt plosives. Displays s
++ [SHIFT K_X] > U+E3ED U+E3F2     	   	   	c Displays X (sh(t))
++ [SHIFT K_P] > U+E3ED U+E3EC U+E3F4       	c Displays P (dhh)
++ [SHIFT K_B] > U+E3ED U+E3EC U+E3F6       	c Displays B (bb)
++ [SHIFT K_Q] > U+E3ED U+E3EC U+E3FE        c Displays Q (tR or Rt)
+
+c store (modifiers) 	'M'    	'G'    	'H'    	'Y'     'q'
++ [SHIFT K_Y] > U+E3E0  	   	   	   	   	c Displays modifiers, Displays Y
++ [SHIFT K_M] > U+E3E9  	   	   	   	   	c Displays M
++ [SHIFT K_G] > U+E3EC  	   	   	   	   	c Displays G
++ [SHIFT K_H] > U+E3ED  	   	   	   	   	c Displays H
++ [K_Q] > U+E3ED U+E3E0 	   	   	   	   	c Displays q (ah)
+
+c store(plosiveAlternativeSequence)    'ch'    'th'    'sh'    Added to prevent interfering with eKalappai
+U+E3F0 + [K_H] > context(1) U+E3F0 
+U+E3F4 + [K_H] > context(1) U+E3F4
+U+E3ED U+E3EC U+E3F0 + [K_H] > context(1) U+E3ED U+E3EC U+E3F0
+
+store(fricatives)          'y'     'r'     'l'      'v'     'z'      'L'
+store(tamilFricatives)   U+E3F8  U+E3F9  U+E3FA   U+E3FB  U+E3FC   U+E3FD
++ any(fricatives) > index(tamilFricatives,1)     c Displays fricatives
+
+c store(altFricatives)      'F'
++ [SHIFT K_F] > U+E3EC U+E3FB  	   	   	   	   	c Displays F
+
+store(nasals)          'W'     'V'     'N'      'w'     'm'      'n'
+store(tamilNasals)   U+E3EF  U+E3F1  U+E3F3   U+E3F5  U+E3F7   U+E3FF
++ any(nasals) > index(tamilNasals,1)              c Displays nasals
+
+U+E3F9 U+E3E6 + '.' >  U+0BF9 U+002E            c rU. or ruu. > Tamil Rupee Symbol
+U+0BF9 U+002E + '.' > U+20B9 U+002E             c rU.. > Rupee Symbol
